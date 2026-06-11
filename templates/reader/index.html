@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PDF Reader</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="toolbar">
+      <div class="title">
+        <strong id="documentTitle">PDF Reader</strong>
+        <span id="pageCount"></span>
+      </div>
+      <div class="controls">
+        <select id="languageSelect" aria-label="Language"></select>
+        <select id="themeSelect" aria-label="Theme">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="sepia">Sepia</option>
+        </select>
+        <button id="zoomOut" type="button">-</button>
+        <button id="zoomIn" type="button">+</button>
+      </div>
+    </header>
+
+    <main id="reader" class="reader"></main>
+
+    <script src="reader.js"></script>
+  </body>
+</html>

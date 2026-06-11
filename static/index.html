@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PDF Layout Translator</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel upload-panel">
+        <div>
+          <p class="eyebrow">PDF Layout Translator</p>
+          <h1>Upload, convert, extract structure, translate, and download.</h1>
+        </div>
+
+        <div class="grid two">
+          <form id="pdfForm" class="tool-card">
+            <h2>PDF Tools</h2>
+            <label class="dropzone" for="pdfFile">
+              <span id="pdfFileLabel">Choose a PDF file</span>
+              <input id="pdfFile" name="file" type="file" accept="application/pdf" required>
+            </label>
+            <div class="actions">
+              <button type="submit" data-kind="reader">Process Reader ZIP</button>
+              <button type="submit" data-kind="pdf_html" class="secondary">PDF to HTML ZIP</button>
+            </div>
+          </form>
+
+          <form id="htmlForm" class="tool-card">
+            <h2>HTML Structure</h2>
+            <label class="dropzone" for="htmlFile">
+              <span id="htmlFileLabel">Choose an HTML file</span>
+              <input id="htmlFile" name="file" type="file" accept=".html,.htm,text/html" required>
+            </label>
+            <button type="submit">HTML to JSON ZIP</button>
+          </form>
+        </div>
+
+        <section class="tool-card translate-card">
+          <h2>Translate Reader</h2>
+          <div class="translate-row">
+            <label>
+              <span>From</span>
+              <select id="sourceLanguage"></select>
+            </label>
+            <label>
+              <span>To</span>
+              <select id="targetLanguage"></select>
+            </label>
+            <button id="translateButton" type="button">Translate Selected Job</button>
+          </div>
+        </section>
+
+        <div id="status" class="status" aria-live="polite">Waiting for upload.</div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>Jobs</h2>
+          <button id="refreshJobs" type="button" class="secondary">Refresh</button>
+        </div>
+        <div id="jobs" class="jobs"></div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
