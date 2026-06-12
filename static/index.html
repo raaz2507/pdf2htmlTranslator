@@ -3,55 +3,108 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PDF Layout Translator</title>
+    <title>PDF to HTML</title>
     <link rel="stylesheet" href="/static/style.css">
   </head>
   <body>
     <main class="shell">
       <section class="panel upload-panel">
-        <div>
-          <p class="eyebrow">PDF Layout Translator</p>
-          <h1>Upload, convert, extract structure, translate, and download.</h1>
-        </div>
+        <header class="hero">
+          <div class="hero-topline">
+            <p class="eyebrow">PDF to HTML</p>
+            <a class="button-link secondary compact-link" href="/reader" target="_blank" rel="noreferrer">Open Reader</a>
+          </div>
+          <h1>PDF, HTML, .phjz and translation tools in one dashboard.</h1>
+          <p class="hero-copy">Convert PDFs, package reader files, translate content, and continue work from saved jobs.</p>
+        </header>
 
-        <div class="grid two">
+        <div class="grid tools-grid">
           <form id="pdfForm" class="tool-card">
-            <h2>PDF Tools</h2>
+            <h2>PDF to HTML</h2>
             <label class="dropzone" for="pdfFile">
               <span id="pdfFileLabel">Choose a PDF file</span>
               <input id="pdfFile" name="file" type="file" accept="application/pdf" required>
             </label>
-            <div class="actions">
-              <button type="submit" data-kind="reader">Process Reader ZIP</button>
-              <button type="submit" data-kind="pdf_html" class="secondary">PDF to HTML ZIP</button>
+            <button type="submit">PDF to HTML ZIP</button>
+            <div class="inline-progress" id="pdfProgress">
+              <div class="progress"><span></span></div>
+              <span class="progress-label">Waiting for PDF.</span>
+            </div>
+          </form>
+
+          <form id="pdfPackageForm" class="tool-card">
+            <h2>PDF to .phjz</h2>
+            <label class="dropzone" for="pdfPackageFile">
+              <span id="pdfPackageFileLabel">Choose a PDF file</span>
+              <input id="pdfPackageFile" name="file" type="file" accept="application/pdf" required>
+            </label>
+            <button type="submit">PDF to .phjz</button>
+            <div class="inline-progress" id="pdfPackageProgress">
+              <div class="progress"><span></span></div>
+              <span class="progress-label">Waiting for PDF.</span>
             </div>
           </form>
 
           <form id="htmlForm" class="tool-card">
-            <h2>HTML Structure</h2>
+            <h2>HTML to .phjz</h2>
             <label class="dropzone" for="htmlFile">
               <span id="htmlFileLabel">Choose an HTML file</span>
               <input id="htmlFile" name="file" type="file" accept=".html,.htm,text/html" required>
             </label>
-            <button type="submit">HTML to JSON ZIP</button>
+            <button type="submit">HTML to .phjz</button>
           </form>
+
+          <section class="tool-card translate-card">
+            <h2>Package Reader & Translation</h2>
+            <label class="dropzone" for="translationFile">
+              <span id="translationFileLabel">Choose a .phjz package</span>
+              <input id="translationFile" name="file" type="file" accept=".phjz" required>
+            </label>
+            <div class="translate-row">
+              <label>
+                <span>Preset</span>
+                <select id="providerPreset">
+                  <option value="">Custom</option>
+                  <option value="fast-online">Fast Online</option>
+                  <option value="accurate-online">Accurate Online</option>
+                  <option value="private-offline">Private Offline</option>
+                  <option value="modern-offline">Modern Hindi Offline</option>
+                </select>
+              </label>
+              <label>
+                <span>From</span>
+                <select id="sourceLanguage"></select>
+              </label>
+              <label>
+                <span>To</span>
+                <select id="targetLanguage"></select>
+              </label>
+              <label>
+                <span>AI Engine</span>
+                <select id="translationProvider">
+                  <option value="indictrans2" selected>IndicTrans2</option>
+                  <option value="gemini">Gemini</option>
+                  <option value="google">Google</option>
+                  <option value="chatgpt">ChatGPT</option>
+                  <option value="local">Local</option>
+                </select>
+              </label>
+            </div>
+            <div class="actions">
+              <a class="button-link secondary" href="/reader" target="_blank" rel="noreferrer">Open Reader</a>
+              <button id="openPackageButton" type="button" class="secondary">Open Package</button>
+              <button id="estimateButton" type="button" class="secondary">Estimate</button>
+              <button id="translateButton" type="button">Translate Package</button>
+            </div>
+            <div class="inline-progress" id="translationProgress">
+              <div class="progress"><span></span></div>
+              <span class="progress-label">Waiting for package.</span>
+            </div>
+            <div id="translationEstimate" class="estimate-box" hidden></div>
+          </section>
         </div>
 
-        <section class="tool-card translate-card">
-          <h2>Translate Reader</h2>
-          <div class="translate-row">
-            <label>
-              <span>From</span>
-              <select id="sourceLanguage"></select>
-            </label>
-            <label>
-              <span>To</span>
-              <select id="targetLanguage"></select>
-            </label>
-            <button id="translateButton" type="button">Translate Selected Job</button>
-          </div>
-        </section>
-
+        <div id="messages" class="messages" aria-live="polite"></div>
         <div id="status" class="status" aria-live="polite">Waiting for upload.</div>
       </section>
 

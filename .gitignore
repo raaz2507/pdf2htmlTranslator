@@ -1,5 +1,9 @@
 .venv/
+.env
+.pip-cache/
+indictrans_service/vendor/
 __pycache__/
 *.py[cod]
 uploads/
 outputs/
+logs/

@@ -9,22 +9,98 @@
   <body>
     <header class="toolbar">
       <div class="title">
+        <span>Universal Reader</span>
         <strong id="documentTitle">PDF Reader</strong>
-        <span id="pageCount"></span>
       </div>
-      <div class="controls">
-        <select id="languageSelect" aria-label="Language"></select>
-        <select id="themeSelect" aria-label="Theme">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          <option value="sepia">Sepia</option>
-        </select>
-        <button id="zoomOut" type="button">-</button>
-        <button id="zoomIn" type="button">+</button>
-      </div>
+      <span id="pageCount" class="page-count"></span>
     </header>
 
+    <button id="navToggle" class="nav-toggle" type="button" aria-label="Toggle reader controls">Hide</button>
+
+    <nav id="readerNav" class="reader-nav">
+      <div class="controls">
+        <section class="control-group">
+          <span>View</span>
+          <select id="languageSelect" aria-label="Display language"></select>
+          <select id="themeSelect" aria-label="Theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="sepia">Sepia</option>
+          </select>
+          <select id="pageColorSelect" aria-label="Page color">
+            <option value="#ffffff">White page</option>
+            <option value="transparent">Transparent page</option>
+            <option value="#f8f4e8">Warm page</option>
+            <option value="#eef6ff">Blue page</option>
+            <option value="#111827">Dark page</option>
+          </select>
+          <label class="range-control">
+            <span>Page opacity</span>
+            <input id="pageOpacityRange" type="range" min="0.2" max="1" step="0.05" value="1">
+          </label>
+        </section>
+
+        <section class="control-group">
+          <span>Translate</span>
+          <select id="sourceLanguageSelect" aria-label="Translate from"></select>
+          <select id="targetLanguageSelect" aria-label="Translate to"></select>
+          <select id="providerSelect" aria-label="Translation AI">
+            <option value="indictrans2" selected>IndicTrans2</option>
+            <option value="gemini">Gemini</option>
+            <option value="google">Google</option>
+            <option value="chatgpt">ChatGPT</option>
+            <option value="local">Local</option>
+          </select>
+          <button id="translateDocumentButton" type="button">Translate</button>
+          <button id="abortTranslationButton" type="button" class="danger-button" disabled>Abort</button>
+        </section>
+
+        <section class="control-group">
+          <span>File</span>
+          <label class="browse-control" for="readerPackageFile">
+            Browse .phjz
+            <input id="readerPackageFile" type="file" accept=".phjz">
+          </label>
+          <a id="downloadPackageButton" class="download-control" href="#" download hidden>Download .phjz</a>
+          <button id="printButton" type="button">Print</button>
+          <label class="toggle-control">
+            <input id="missingImageToggle" type="checkbox">
+            <span>Missing images</span>
+          </label>
+        </section>
+      </div>
+    </nav>
+
+    <div id="translationProgress" class="translation-progress" hidden>
+      <div class="progress"><span></span></div>
+      <span id="translationProgressLabel">Waiting.</span>
+    </div>
+
+    <section id="translationLogPanel" class="translation-log-panel" hidden>
+      <div class="translation-log-head">
+        <strong>Translation Log</strong>
+        <button id="clearTranslationLogView" type="button">Clear View</button>
+      </div>
+      <div id="translationLogList" class="translation-log-list"></div>
+    </section>
+
+    <div id="readerMessages" class="reader-messages" aria-live="polite"></div>
+    <div id="readerMessage" class="reader-message" aria-live="polite"></div>
     <main id="reader" class="reader"></main>
+
+    <aside id="translationEditor" class="translation-editor" hidden>
+      <div>
+        <strong>Translation</strong>
+        <button id="closeEditor" type="button">x</button>
+      </div>
+      <p id="editorSource"></p>
+      <textarea id="editorValue" rows="4"></textarea>
+      <div class="editor-actions">
+        <button id="retranslateText" type="button">Retranslate</button>
+        <button id="saveTextTranslation" type="button">Save</button>
+      </div>
+      <span id="editorMessage"></span>
+    </aside>
 
     <script src="reader.js"></script>
   </body>
